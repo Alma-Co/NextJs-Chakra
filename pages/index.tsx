@@ -11,20 +11,26 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
-const lastSearches = [].slice(0, 9);;
-const apiKey = '4a0ba53fdb1f48a99e9a14b687015adb';
+
+interface Result {
+    name: string | null,
+    image: string | null,
+}
+
+const lastSearches: string[] = [].slice(0, 9);;
+const apiKey: string = '4a0ba53fdb1f48a99e9a14b687015adb';
 
 
 const Home = () => {
-const [modal, setModal] = useState(false);
-const [value, setValue] = useState('');
-const [ingredientsList, setIngredientsList] = useState(null);
+const [modal, setModal] = useState<boolean>(false);
+const [value, setValue] = useState<string>('');
+const [ingredientsList, setIngredientsList] = useState<Result[]|null>(null);
 
 
 
-  async function loadIngredientsFromAPIByName(name) {
-    const endpoint = `https://api.spoonacular.com/food/ingredients/search?query=${name}&apiKey=${apiKey}`;
-    const getFromLocalStorage = JSON.parse(window.localStorage.getItem(name));
+  async function loadIngredientsFromAPIByName(name: string) {
+    const endpoint: string = `https://api.spoonacular.com/food/ingredients/search?query=${name}&apiKey=${apiKey}`;
+    const getFromLocalStorage: Result[]|null = JSON.parse(window.localStorage.getItem(name));
 
     if(getFromLocalStorage && lastSearches.includes(name)) {
       return setIngredientsList(getFromLocalStorage)
@@ -37,22 +43,22 @@ const [ingredientsList, setIngredientsList] = useState(null);
           window.localStorage.setItem(name, JSON.stringify(data.results));
           return setIngredientsList(data.results);
         } else {
-          const noResult =[{name: 'There is no results for this search', image: null}]
+          const noResult: Result[] =[{name: 'There is no results for this search', image: null}]
           return setIngredientsList(noResult);
         }
 		    
-      } catch (error) {
+      } catch (error: any) {
        
 	    return error
       }
     }
   }
 
-  const handleSubmit = (event) => {    
+  const handleSubmit = (event: any) => {    
     event ? loadIngredientsFromAPIByName(event.target.innerText) : loadIngredientsFromAPIByName(value);
   }
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     event.target.value.length ? setModal(false) : setModal(true);
     setValue(event.target.value);
   }
