@@ -30,7 +30,7 @@ const [ingredientsList, setIngredientsList] = useState<Result[]|null>(null);
 
   async function loadIngredientsFromAPIByName(name: string) {
     const endpoint: string = `https://api.spoonacular.com/food/ingredients/search?query=${name}&apiKey=${apiKey}`;
-    const getFromLocalStorage: Result[]|null = JSON.parse(window.localStorage.getItem(name));
+    const getFromLocalStorage: Result[]|null = JSON.parse(window.localStorage.getItem(name) as string);
 
     if(getFromLocalStorage && lastSearches.includes(name)) {
       return setIngredientsList(getFromLocalStorage)
@@ -92,7 +92,7 @@ const [ingredientsList, setIngredientsList] = useState<Result[]|null>(null);
  
     </FormControl> 
     {ingredientsList?.map(e => <Box maxW="sm" borderWidth="2px" borderRadius="sm" overflow="hidden">
-      <Image key={e.image} src={e.image ? `https://spoonacular.com/cdn/ingredients_100x100/${e.image}` : `https://images.assetsdelivery.com/compings_v2/pavelstasevich/pavelstasevich1902/pavelstasevich190200120.jpg`} alt={e.image} />   
+      <Image key={e.image} src={e.image ? `https://spoonacular.com/cdn/ingredients_100x100/${e.image}` : `https://images.assetsdelivery.com/compings_v2/pavelstasevich/pavelstasevich1902/pavelstasevich190200120.jpg`} alt={e.image as string} />   
         <Box
           key={e.name}
           mt="1"
