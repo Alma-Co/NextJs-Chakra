@@ -1,5 +1,4 @@
 import { ChakraProvider } from "@chakra-ui/react"
-import '../styles/global.css'
 import { AppProps } from 'next/app'
 import * as React from "react"
 

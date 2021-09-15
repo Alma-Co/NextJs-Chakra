@@ -1,25 +1,14 @@
-import React, { useState } from 'react'
 import {
-  FormControl,
-  FormLabel,
-  Input,
-  Box,
-  Button,
   Stack,
+  Box,
+  Flex,
   Image,
-  Tag,
-  InputGroup,
-  InputRightElement,
+  Heading
 } from "@chakra-ui/react";
+import React, { useState } from 'react';
+import { lastSearches, loadIngredientsFromAPIByName, Result } from '../api/api_ingredients';
 import List from '../components/list';
 import Search from '../components/search';
-import {loadIngredientsFromAPIByName, lastSearches} from './api/api_ingredients';
-
-
-interface Result {
-    name: string | null,
-    image: string | null,
-}
 
 
 const Home = () => {
@@ -37,9 +26,13 @@ const [ingredientsList, setIngredientsList] = useState<Result[]>();
   }
 
   return (
-    <Stack>
-      <Search value={value} handleChange={handleChange} handleSubmit={handleSubmit} modal={modal} lastSearches={lastSearches} />
-      <List list={ingredientsList}/>
+    <Stack p={8} spacing={4} >
+      <Flex alignItems='center'>
+        <Heading color="teal.200" fontWeight="bold" letterSpacing="wide">Yumm ... !</Heading>
+        <Image borderRadius="full" boxSize="60px" src="https://img.freepik.com/vecteurs-libre/mignon-heureux-toast-drole-boire-du-cafe-conception-icone-illustration-personnage-dessin-anime-isole-fond-blanc_92289-1038.jpg?size=338&ext=jpg" alt="Segun Adebayo" />
+      </Flex>
+      <Search  value={value} handleChange={handleChange} handleSubmit={handleSubmit} modal={modal} lastSearches={lastSearches} />
+      <List  list={ingredientsList}/>
     </Stack>        
   )
 }
